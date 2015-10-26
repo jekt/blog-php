@@ -1,0 +1,1 @@
+<?php include(Conf::$DIR_PARTIALS . '_scripts.php'); ?>

@@ -10,13 +10,13 @@ include_once(Conf::$DIR_MODELS . 'Router.php');
 
 $r = new Router();
 
-$r->get('/post/create', 'postCreateController.php');
+$r->get('/post/create', 'postUpdateController.php');
 $r->get('/post/(:id)', 'postPageController.php');
 $r->get('/post/(:id)/update', 'postUpdateController.php');
 $r->get('/users', 'userListController.php');
-$r->get('/user/create', 'userCreateController.php');
+$r->get('/user/login', 'userConnectController.php');
+$r->get('/user/logout', 'userConnectController.php');
 $r->get('/user/(:id)', 'userPageController.php');
-$r->get('/user/(:id)/update', 'userUpdateController.php');
 $r->get('/', 'homePageController.php');
 $r->error('homePageController.php');
 ?>

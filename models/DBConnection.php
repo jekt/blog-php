@@ -20,36 +20,21 @@ class DBConnection {
     $this->db->close();
   }
 
-  public function fetchAll($table, $offset = 0, $limit = 10) {
-    return $this->select('*', $table);
-  }
-
-  public function select($fields, $tables, $condition = null, $offset = 0, $limit = 10, $orderBy = null) {
-    $query = sprintf("SELECT %s FROM %s %s LIMIT %d, %d %s",
-      $this->db->real_escape_string($fields),
-      $this->db->real_escape_string($tables),
-      ($condition) ? "WHERE " . $this->db->real_escape_string($condition) : '',
-      $this->db->real_escape_string($offset),
-      $this->db->real_escape_string($limit),
-      ($orderBy) ? "ORDER BY " . $this->db->real_escape_string($orderBy) : ''
-    );
+  public function query($query) {
+    $query = $this->db->real_escape_string(trim($query));
     $result = $this->db->query($query);
 
     if (!$result) {
       die($query . ' => ' . $this->db->error);
     }
 
-    switch ($limit) {
-      case 0:
-        return false;
-        break;
-      case 1:
-        $rows = $result->fetch_object();
-        break;
-      default:
-        for ($i = 0; $i < $result->num_rows; $i++) {
-          $rows[$i] = $result->fetch_object();
-        }
+    $n = $result->num_rows;
+    if ($n == 0) {
+      return false;
+    }
+    
+    for ($i = 0; $i < $n; $i++) {
+      $rows[$i] = $result->fetch_object();
     }
     
     return $rows;

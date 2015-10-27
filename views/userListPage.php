@@ -3,6 +3,8 @@
 <html>
 <?php include(Conf::$DIR_PARTIALS . '_head.php'); ?>
 <body>
+  <?php include(Conf::$DIR_PARTIALS . '_header.php'); ?>
+
   <h1><?php echo $pageTitle; ?></h1>
   <ul>
 	<?php 

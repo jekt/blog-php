@@ -7,15 +7,15 @@ class Router {
 
   public function __construct() {
   	$basepath = implode('/', array_slice(explode('/', $_SERVER['SCRIPT_NAME']), 0, -1)) . '/';
-	$uri = '/' . substr($_SERVER['REQUEST_URI'], strlen($basepath));
-	$this->params = array();
-	if (strpos($uri,'?')) {
-		$this->params = $_GET;
-		$uri = explode('?', $uri);
-		$this->uri = $uri[0];
-	} else {
-		$this->uri = $uri;
-	}
+  	$uri = '/' . substr($_SERVER['REQUEST_URI'], strlen($basepath));
+  	$this->params = array();
+  	if ($_GET != null) {
+  		$this->params = $_GET;
+  		$uri = explode('?', $uri);
+  		$this->uri = $uri[0];
+  	} else {
+  		$this->uri = $uri;
+  	}
   }
 
   public function get($route, $controller) {

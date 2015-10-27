@@ -3,6 +3,7 @@
 <html>
 <?php include(Conf::$DIR_PARTIALS . '_head.php'); ?>
 <body>
+  <?php echo '<a href="' . Conf::$BASE_URL . '">&laquo; accueil</a>'; ?>
   <h1><?php echo $post->title; ?></h1>
   <ul>
 	<?php 

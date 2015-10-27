@@ -39,7 +39,7 @@ class DBConnection {
       die($query . ' => ' . $this->db->error);
     }
 
-    switch ($result->num_rows) {
+    switch ($limit) {
       case 0:
         return false;
         break;

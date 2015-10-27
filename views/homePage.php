@@ -1,4 +1,4 @@
-<?php $pageTitle = 'Page d\'accueil'; ?>
+<?php $pageTitle = 'Page d\'accueil';?>
 
 <html>
 <?php include(Conf::$DIR_PARTIALS . '_head.php'); ?>

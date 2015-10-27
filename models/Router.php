@@ -6,16 +6,10 @@ class Router {
   		  $controller;
 
   public function __construct() {
-  	$basepath = implode('/', array_slice(explode('/', $_SERVER['SCRIPT_NAME']), 0, -1)) . '/';
-  	$uri = '/' . substr($_SERVER['REQUEST_URI'], strlen($basepath));
-  	$this->params = array();
-  	if ($_GET != null) {
-  		$this->params = $_GET;
-  		$uri = explode('?', $uri);
-  		$this->uri = $uri[0];
-  	} else {
-  		$this->uri = $uri;
-  	}
+  	$uri = str_replace(Conf::$BASE_URL, '', 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+
+  	$this->params = $_GET || [];
+    $this->uri = strtok($uri, '?');
   }
 
   public function get($route, $controller) {

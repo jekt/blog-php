@@ -6,39 +6,17 @@ if (Conf::$DEBUG_MODE) {
   ini_set('display_errors', '1');
 }
 
-$route = $_GET['route'];
+include_once(Conf::$DIR_MODELS . 'Router.php');
 
-if (preg_match('#^\/post\/create\/?$#i', $route)) {
+$r = new Router();
 
-  include_once(Conf::$DIR_CONTROLLERS . 'postCreateController.php');
-
-} elseif (preg_match('#^\/post\/[a-z0-9-_]{3,}\/?$#i', $route)) {
-	
-  include_once(Conf::$DIR_CONTROLLERS . 'postPageController.php');
-
-} elseif (preg_match('#^\/post\/[a-z0-9-_]{3,}\/update\/?$#i', $route)) {
-	
-  include_once(Conf::$DIR_CONTROLLERS . 'postUpdateController.php');
-
-} elseif (preg_match('#^\/users\/?$#i', $route)) {
-	
-  include_once(Conf::$DIR_CONTROLLERS . 'userListController.php');
-
-} elseif (preg_match('#^\/user\/create\/?$#i', $route)) {
-	
-  include_once(Conf::$DIR_CONTROLLERS . 'userCreateController.php');
-
-} elseif (preg_match('#^\/user\/[a-z0-9-_]{3,}\/?$#i', $route)) {
-	
-  include_once(Conf::$DIR_CONTROLLERS . 'userPageController.php');
-
-} elseif (preg_match('#^\/user\/[a-z0-9-_]{3,}\/update\/?$#i', $route)) {
-	
-  include_once(Conf::$DIR_CONTROLLERS . 'userUpdateController.php');
-
-} else {
-  
-  include_once(Conf::$DIR_CONTROLLERS . 'homePageController.php');
-
-}
+$r->get('/post/create', 'postCreateController.php');
+$r->get('/post/(:id)', 'postPageController.php');
+$r->get('/post/(:id)/update', 'postUpdateController.php');
+$r->get('/users', 'userListController.php');
+$r->get('/user/create', 'userCreateController.php');
+$r->get('/user/(:id)', 'userPageController.php');
+$r->get('/user/(:id)/update', 'userUpdateController.php');
+$r->get('/', 'homePageController.php');
+$r->error('homePageController.php');
 ?>

@@ -7,7 +7,7 @@
   <ul>
 	<?php 
 	  foreach($posts as $post) {
-	  	echo '<li>' . $post->title . '</li>';
+	  	echo '<li><a href="' . Conf::$BASE_URL . '/post/' . $post->id .'">' . $post->title . '</a></li>';
 	  }
 	?>
   </ul>

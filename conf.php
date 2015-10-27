@@ -9,6 +9,7 @@
            $DIR_MODELS 		  = 'models/',
            $DIR_VIEWS 		  = 'views/',
            $DIR_PARTIALS	  = 'views/partials/',
-           $DEBUG_MODE      = true;
+           $DEBUG_MODE      = true,
+           $BASE_URL        = 'http://localhost:8888/Cours/PHP/blog';
   }
 ?>

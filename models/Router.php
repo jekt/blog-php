@@ -19,7 +19,7 @@ class Router {
   }
 
   public function get($route, $controller) {
-  	$route = preg_replace('#\(\:[a-z]+\)#i', '([a-z0-9-_]{3,})', $route);
+  	$route = preg_replace('#\(\:[a-z]+\)#i', '([a-z0-9-_]+)', $route);
   	
   	if (preg_match('#^' . $route . '/?$#i', $this->uri, $ids)) {
   	  if (isset($ids)) {

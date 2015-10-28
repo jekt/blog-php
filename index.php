@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 include_once('conf.php');
 
 if (Conf::$DEBUG_MODE) {
@@ -11,15 +12,13 @@ include_once(Conf::$DIR_MODELS . 'Router.php');
 include_once(Conf::$DIR_MODELS . 'Post.php');
 include_once(Conf::$DIR_MODELS . 'User.php');
 
-$r = new Router();
-
-$r->get('/post/create', 'postUpdateController.php');
-$r->get('/post/(:id)', 'postPageController.php');
-$r->get('/post/(:id)/update', 'postUpdateController.php');
-$r->get('/users', 'userListController.php');
-$r->get('/user/login', 'userConnectController.php');
-$r->get('/user/logout', 'userConnectController.php');
-$r->get('/user/(:id)', 'userPageController.php');
-$r->get('/', 'homePageController.php');
-$r->error('homePageController.php');
+Router::r('/post/create', 'postUpdateController.php');
+Router::r('/post/(:id)', 'postPageController.php');
+Router::r('/post/(:id)/update', 'postUpdateController.php');
+Router::r('/users', 'userListController.php');
+Router::r('/user/login', 'userConnectController.php');
+Router::r('/user/logout', 'userConnectController.php');
+Router::r('/user/(:id)', 'userPageController.php');
+Router::r('/', 'homePageController.php');
+Router::error('homePageController.php');
 ?>

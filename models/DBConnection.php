@@ -57,5 +57,9 @@ class DBConnection {
   public function clean($var) {
     return $this->db->real_escape_string(trim($var));
   }
+
+  public function get($prop) {
+    return $this->$prop;
+  }
 }
 ?>

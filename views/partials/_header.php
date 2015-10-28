@@ -10,7 +10,14 @@
 	  <a href="<?php echo Conf::$BASE_URL; ?>/users">Auteurs</a>
 	</li>
 	<li>
-	  <a href="<?php echo Conf::$BASE_URL; ?>/user/login">Se connecter</a>
+	  <?php 
+	  	if (isset($_SESSION['user']) && $_SESSION['user'] != null) {
+	  	  echo '<a href="' . Conf::$BASE_URL . '/user/logout">Se déconnecter (' . unserialize($_SESSION['user'])->get('pseudo') . ')</a>';
+	  	} else {
+	  	  echo '<a href="' . Conf::$BASE_URL . '/user/login">Se connecter</a>';
+	  	}
+	  ?>
+	  
 	</li>
 	<li>
 	  <a href="<?php echo Conf::$BASE_URL; ?>/404">404</a>

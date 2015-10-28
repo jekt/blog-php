@@ -21,7 +21,7 @@ class User {
 
   static function logIn($email, $password) {
     $dbc = self::setDB();
-    $match = $dbc->select('SELECT id, pseudo FROM user WHERE email="' . $email . '" AND password="' . sha1($assword) . '"');
+    $match = $dbc->select('SELECT id, pseudo FROM user WHERE email="' . $email . '" AND password="' . sha1($password) . '"');
     if ($match) {
       $user = new User($match[0]->id, $match[0]->pseudo);
       $user->setToken();
@@ -60,7 +60,7 @@ class User {
     return new DBConnection();
   }
 
-  public function setToken($user) {
+  public function setToken() {
     $this->token = serialize($this);
     $this->isLoggedIn = true;
     $_SESSION['user'] = $this->token;

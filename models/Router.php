@@ -1,49 +1,42 @@
 <?php
 class Router {
-  private $uri,
+  static $uri,
   		  $params,
   		  $ids,
   		  $routeFound = false;
 
-  public function __construct() {
+  static function init() {
   	$uri = str_replace(Conf::$BASE_URL, '', 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
 
-  	$this->params = $_GET || [];
-    $this->uri = strtok($uri, '?');
+  	self::$params = $_GET || [];
+    self::$uri = strtok($uri, '?');
   }
 
-  public function get($route, $controller) {
-    if (!$this->routeFound) {
+  static function r($route, $controller) {
+    self::init();
+    if (!self::$routeFound) {
     	$route = preg_replace('#\(\:[a-z]+\)#i', '([a-z0-9-_]+)', $route);
     	
-    	if (preg_match('#^' . $route . '/?$#i', $this->uri, $ids)) {
+    	if (preg_match('#^' . $route . '/?$#i', self::$uri, $ids)) {
     	  if (isset($ids)) {
-    	  	$this->ids = array_slice($ids, 1);
+    	  	self::$ids = array_slice($ids, 1);
     	  }
-    	  $this->routeFound = true;
+    	  self::$routeFound = true;
     	  include_once(Conf::$DIR_CONTROLLERS . $controller);
     	}
     }
   }
 
-  public function error($fallbackController) {
-  	if (!$this->routeFound) {
+  static function error($fallbackController) {
+  	if (!self::$routeFound) {
   	  http_response_code(404);
-      $this->routeFound = true;
+      self::$routeFound = true;
   	  include_once(Conf::$DIR_CONTROLLERS . $fallbackController);
   	}
   }
 
-  public function getURI() {
-  	return $this->uri;
-  }
-
-  public function getParams() {
-  	return $this->params;
-  }
-
-  public function getIds() {
-  	return $this->ids;
+  static function get($prop) {
+    return self::$$prop;
   }
 }
 ?>

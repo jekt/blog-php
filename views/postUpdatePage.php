@@ -29,6 +29,7 @@
   	<label>Contenu : <br/>
   		<textarea name="content" placeholder="Contenu de l'article..."><?php echo (isset($content)) ? $content : ''; ?></textarea>
   	</label><br/>
+    <input type="hidden" name="author" value="<?php echo unserialize($_SESSION['user'])->get('id'); ?>" />
   	<input type="submit" value="<?php echo $action; ?>" />
   </form>
 

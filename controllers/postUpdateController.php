@@ -1,4 +1,8 @@
 <?php
+
+  if (!(isset($_SESSION['user']) && $_SESSION['user'] != null)) {
+    header('Location: ' . Conf::$BASE_URL . '/');
+  }
   
   if ($_POST != null) {
   	extract($_POST);
@@ -10,13 +14,13 @@
   	if (count($errors) == 0) {
   	  require_once(Conf::$DIR_MODELS . 'DBConnection.php');
   	  $dbc = new DBConnection();
-  	  if (!isset($this->ids[0])) {
-  	    $success = $dbc->insert('INSERT INTO post (title, content) VALUES (\'' . $title . '\', \'' . $content . '\')');
-        $id = $dbc->insert_id;
+  	  if (!isset(self::$ids[0])) {
+  	    $success = $dbc->insert('INSERT INTO post (title, content, author) VALUES (\'' . $title . '\', \'' . $content . '\', ' . $author . ')');
+        $id = $dbc->get('db')->insert_id;
   	  } else {
         $success = $dbc->update('UPDATE post SET title = \'' . $title . '\', content = \'' . $content . '\' WHERE id = ' . $this->ids[0]);
       }
-      header('Location: /post/' . $id);
+      header('Location: ' . Conf::$BASE_URL . '/post/' . $id);
     }
   } else {
 

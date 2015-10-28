@@ -5,5 +5,4 @@
   $posts = $dbc->query('SELECT * FROM post');
 
   include_once(Conf::$DIR_VIEWS . 'homePage.php');
-
 ?>

@@ -21,7 +21,7 @@ class DBConnection {
   }
 
   public function query($query) {
-    $query = $this->db->real_escape_string(trim($query));
+    $query = trim($query);
     $result = $this->db->query($query);
 
     if (!$result) {
@@ -40,12 +40,8 @@ class DBConnection {
     return $rows;
   }
 
-  public function update($table, $properties, $condition) {
-
-  }
-
-  public function delete($table, $condition) {
-
+  public function clean($var) {
+    return $this->db->real_escape_string(trim($var));
   }
 }
 ?>

@@ -9,7 +9,7 @@
   <ul>
 	<?php 
 	  foreach($users as $user) {
-	  	echo '<li><a href="' . Conf::$BASE_URL . '/user/' . $user->id .'">' . $user->pseudo . '</a></li>';
+	  	echo '<li><a href="' . Conf::$BASE_URL . '/user/' . $user->get('id') .'">' . $user->get('pseudo') . '</a></li>';
 	  }
 	?>
   </ul>

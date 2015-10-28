@@ -1,4 +1,5 @@
 <?php
+session_start();
 include_once('conf.php');
 
 if (Conf::$DEBUG_MODE) {
@@ -7,6 +8,8 @@ if (Conf::$DEBUG_MODE) {
 }
 
 include_once(Conf::$DIR_MODELS . 'Router.php');
+include_once(Conf::$DIR_MODELS . 'Post.php');
+include_once(Conf::$DIR_MODELS . 'User.php');
 
 $r = new Router();
 

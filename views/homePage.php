@@ -9,7 +9,7 @@
   <ul>
 	<?php 
 	  foreach($posts as $post) {
-	  	echo '<li><a href="' . Conf::$BASE_URL . '/post/' . $post->id .'">' . $post->title . '</a></li>';
+	  	echo '<li><a href="' . Conf::$BASE_URL . '/post/' . $post->get('id') .'">' . $post->get('title') . '</a></li>';
 	  }
 	?>
   </ul>

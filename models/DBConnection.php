@@ -20,13 +20,8 @@ class DBConnection {
     $this->db->close();
   }
 
-  public function query($query) {
-    $query = trim($query);
-    $result = $this->db->query($query);
-
-    if (!$result) {
-      die($query . ' => ' . $this->db->error);
-    }
+  public function select($query) {
+    $result = $this->doRequest($query);
 
     $n = $result->num_rows;
     if ($n == 0) {
@@ -38,6 +33,25 @@ class DBConnection {
     }
     
     return $rows;
+  }
+
+  public function update($query) {
+    return $this->doRequest($query);
+  }
+
+  public function insert($query) {
+    return $this->doRequest($query);
+  }
+
+  private function doRequest($query) {
+    $query = trim($query);
+    $result = $this->db->query($query);
+
+    if (!$result) {
+      die($query . ' => ' . $this->db->error);
+    }
+
+    return $result;
   }
 
   public function clean($var) {

@@ -27,7 +27,7 @@
   		<input type="file" name="picture" /><br/>
   	</label>
   	<label>Contenu : <br/>
-  		<textarea name="content" placeholder="Contenu de l'article..."><?php echo (isset($updatedTitle)) ? $updatedTitle : ''; ?></textarea>
+  		<textarea name="content" placeholder="Contenu de l'article..."><?php echo (isset($content)) ? $content : ''; ?></textarea>
   	</label><br/>
   	<input type="submit" value="<?php echo $action; ?>" />
   </form>

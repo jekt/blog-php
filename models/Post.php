@@ -44,8 +44,10 @@ class Post {
     DBConnection::connect();
     $result = DBConnection::select('SELECT * FROM post');
     $posts = [];
-    foreach ($result as $post) {
-      array_push($posts, new Post($post->id, $post->title, false));
+    if ($result) {
+      foreach ($result as $post) {
+        array_push($posts, new Post($post->id, $post->title, false));
+      }
     }
     return $posts;
   }

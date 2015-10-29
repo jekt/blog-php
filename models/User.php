@@ -43,8 +43,10 @@ class User {
     DBConnection::connect();
     $result = DBConnection::select('SELECT * FROM user');
     $users = [];
-    foreach ($result as $user) {
-      array_push($users, new User($user->id, $user->pseudo, false));
+    if ($result) {
+      foreach ($result as $user) {
+        array_push($users, new User($user->id, $user->pseudo, false));
+      }
     }
     return $users;
   }

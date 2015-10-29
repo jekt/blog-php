@@ -1,9 +1,9 @@
 <?php
 class DBConnection {
-  private $db;
+  private static $db;
 
-  public function __construct() {
-  	$this->db = new mysqli(
+  static function connect() {
+  	self::$db = new mysqli(
       Conf::$DB_HOST, 
       Conf::$DB_USER, 
       Conf::$DB_PASSWORD,
@@ -11,17 +11,13 @@ class DBConnection {
       Conf::$DB_PORT
     );
 
-    if ($this->db->connect_errno) {
-      die('Erreur de connexion (' . $this->db->connect_errno . ') ' . $this->db->connect_error);
+    if (self::$db->connect_errno) {
+      die('Erreur de connexion (' . self::$db->connect_errno . ') ' . self::$db->connect_error);
     }
   }
 
-  public function __destruct() {
-    $this->db->close();
-  }
-
-  public function select($query) {
-    $result = $this->doRequest($query);
+  static function select($query) {
+    $result = self::doRequest($query);
 
     $n = $result->num_rows;
     if ($n == 0) {
@@ -35,31 +31,31 @@ class DBConnection {
     return $rows;
   }
 
-  public function update($query) {
-    return $this->doRequest($query);
+  static function update($query) {
+    return self::doRequest($query);
   }
 
-  public function insert($query) {
-    return $this->doRequest($query);
+  static function insert($query) {
+    return self::doRequest($query);
   }
 
-  private function doRequest($query) {
+  private static function doRequest($query) {
     $query = trim($query);
-    $result = $this->db->query($query);
+    $result = self::$db->query($query);
 
     if (!$result) {
-      die($query . ' => ' . $this->db->error);
+      die($query . ' => ' . self::$db->error);
     }
 
     return $result;
   }
 
-  public function clean($var) {
-    return $this->db->real_escape_string(trim($var));
+  static function getCleanVar($var) {
+    return self::$db->real_escape_string(trim($var));
   }
 
-  public function get($prop) {
-    return $this->$prop;
+  static function get($prop) {
+    return self::$prop;
   }
 }
 ?>

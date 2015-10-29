@@ -8,6 +8,7 @@ if (Conf::$DEBUG_MODE) {
   ini_set('display_errors', '1');
 }
 
+include_once(Conf::$DIR_MODELS . 'DBConnection.php');
 include_once(Conf::$DIR_MODELS . 'Router.php');
 include_once(Conf::$DIR_MODELS . 'Post.php');
 include_once(Conf::$DIR_MODELS . 'User.php');

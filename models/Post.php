@@ -8,19 +8,19 @@ class Post {
           $author,
           $dbc;
 
-  public function __construct($id, $title = null) {
+  public function __construct($id, $title = null, $fetch = true) {
     $this->id = $id;
 
-    if (!$title) {
-      $dbc = self::setDB();
-      $post = $dbc->select('SELECT p.id as post_id, p.title, p.picture, p.content, p.pubDate, u.id as user_id, u.pseudo as author FROM post p INNER JOIN user u ON p.author = u.id WHERE p.id=' . $id);
+    if ($fetch) {
+      DBConnection::connect();
+      $post = DBConnection::select('SELECT p.id as post_id, p.title, p.picture, p.content, p.pubDate, u.id as user_id, u.pseudo as author FROM post p INNER JOIN user u ON p.author = u.id WHERE p.id=' . DBConnection::getCleanVar($id));
       $post = $post[0];
 
       $this->title = $post->title;
       $this->picture = $this->picture;
       $this->content = $this->content;
       $this->pubDate = $this->pubDate;
-      $this->author = new User($post->user_id, $post->author);
+      $this->author = new User($post->user_id, $post->author, false);
     } else {
       $this->title = $title;
     }
@@ -41,18 +41,13 @@ class Post {
   }
 
   static function fetchAll() {
-    $dbc = self::setDB();
-    $result = $dbc->select('SELECT * FROM post');
+    DBConnection::connect();
+    $result = DBConnection::select('SELECT * FROM post');
     $posts = [];
     foreach ($result as $post) {
-      array_push($posts, new Post($post->id, $post->title));
+      array_push($posts, new Post($post->id, $post->title, false));
     }
     return $posts;
-  }
-
-  static function setDB() {
-    require_once(Conf::$DIR_MODELS . 'DBConnection.php');
-    return new DBConnection();
   }
 }
 ?>

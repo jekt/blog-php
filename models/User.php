@@ -6,12 +6,12 @@ class User {
           $isLoggedIn = false,
           $token;
 
-  public function __construct($id, $pseudo = null) {
+  public function __construct($id, $pseudo = null, $fetch = true) {
     $this->id = $id;
 
-    if (!$pseudo) {
-      $dbc = self::setDB();
-      $user = $dbc->select('SELECT id, pseudo FROM user WHERE id=' . $id);
+    if ($fetch) {
+      DBConnection::connect();
+      $user = DBConnection::select('SELECT id, pseudo FROM user WHERE id=' . DBConnection::getCleanVar($id));
       $user = $user[0];
       $this->pseudo = $user->pseudo;
     } else {
@@ -20,10 +20,10 @@ class User {
   }
 
   static function logIn($email, $password) {
-    $dbc = self::setDB();
-    $match = $dbc->select('SELECT id, pseudo FROM user WHERE email="' . $email . '" AND password="' . sha1($password) . '"');
+    DBConnection::connect();
+    $match = DBConnection::select('SELECT id, pseudo FROM user WHERE email="' . DBConnection::getCleanVar($email) . '" AND password="' . sha1($password) . '"');
     if ($match) {
-      $user = new User($match[0]->id, $match[0]->pseudo);
+      $user = new User($match[0]->id, $match[0]->pseudo, false);
       $user->setToken();
       return true;
     } else {
@@ -46,18 +46,13 @@ class User {
   }
 
   static function fetchAll() {
-    $dbc = self::setDB();
-    $result = $dbc->select('SELECT * FROM user');
+    DBConnection::connect();
+    $result = DBConnection::select('SELECT * FROM user');
     $users = [];
     foreach ($result as $user) {
-      array_push($users, new User($user->id, $user->pseudo));
+      array_push($users, new User($user->id, $user->pseudo, false));
     }
     return $users;
-  }
-
-  static function setDB() {
-    require_once(Conf::$DIR_MODELS . 'DBConnection.php');
-    return new DBConnection();
   }
 
   public function setToken() {

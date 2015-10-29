@@ -1,32 +1,42 @@
 <?php
 
+  if (isset(self::$ids[0])) {
+    $post = new Post(self::$ids[0]);
+    $id = $post->get('id');
+    $title = $post->get('title');
+    $content = $post->get('content');
+    $picture = $post->get('picture');
+    $author = $post->get('author');
+
+    if (unserialize($_SESSION['user'])->get('id') != $author->get('id')) {
+      http_response_code(403);
+      die('<h1>403 Accès interdit !</h1><p>Vous ne pouvez pas modifier cet article, vous n\'en êtes pas l\'auteur.</p>');
+    }
+  }
+
   if (!(isset($_SESSION['user']) && $_SESSION['user'] != null)) {
     http_response_code(403);
-    die('<h1>403 Accès interdit !</h1><p>Vous devez être connecté pour créer un article.</p>');
+    die('<h1>403 Accès interdit !</h1><p>Vous devez être connecté pour créer un article.</p><p><a href="' . Conf::$BASE_URL . '/user/login">Se connecter</a></p>');
   }
   
   if ($_POST != null) {
-  	extract($_POST);
-
-  	$errors = [];
-  	if ($title == '') array_push($errors, 'Le titre ne peut pas être vide !');
-  	if ($content == '') array_push($errors, 'Le contenu ne peut pas être vide !');
+  	
+    extract($_POST);
+    $errors = Post::checkErrors($_POST);
 
   	if (count($errors) == 0) {
-  	  require_once(Conf::$DIR_MODELS . 'DBConnection.php');
-  	  $dbc = new DBConnection();
   	  if (!isset(self::$ids[0])) {
-  	    $success = $dbc->insert('INSERT INTO post (title, content, author) VALUES (\'' . $title . '\', \'' . $content . '\', ' . $author . ')');
-        $id = $dbc->get('db')->insert_id;
+  	    $success = Post::create($title, $content, $author);
   	  } else {
-        $success = $dbc->update('UPDATE post SET title = \'' . $title . '\', content = \'' . $content . '\' WHERE id = ' . $this->ids[0]);
+        $success = Post::update(self::$ids[0], $title, $content);
       }
-      header('Location: ' . Conf::$BASE_URL . '/post/' . $id);
+
+      if ($success) {
+        header('Location: ' . Conf::$BASE_URL . '/post/' . $success);
+      }
     }
-  } else {
+  } 
 
-  }
-  $action = 'Créer';
+  $action = (self::$uri == '/post/create') ? 'Créer' : 'Modifier';
   include_once(Conf::$DIR_VIEWS . 'postUpdatePage.php');
-
 ?>

@@ -54,8 +54,8 @@ class DBConnection {
     return self::$db->real_escape_string(trim($var));
   }
 
-  static function get($prop) {
-    return self::$prop;
+  static function getDB() {
+    return self::$db;
   }
 }
 ?>

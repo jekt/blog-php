@@ -17,23 +17,25 @@ class Post {
       $post = $post[0];
 
       $this->title = $post->title;
-      $this->picture = $this->picture;
-      $this->content = $this->content;
-      $this->pubDate = $this->pubDate;
+      $this->picture = $post->picture;
+      $this->content = $post->content;
+      $this->pubDate = $post->pubDate;
       $this->author = new User($post->user_id, $post->author, false);
     } else {
       $this->title = $title;
     }
   }
 
-  public function create() {
-
+  static function create($title, $content, $author) {
+    DBConnection::connect();
+    DBConnection::insert('INSERT INTO post (title, content, author) VALUES (\'' . $title . '\', \'' . $content . '\', ' . $author . ')');
+    return DBConnection::getDB()->insert_id;
   }
 
-  public function update($properties) {
-    foreach($properties as $key => $value) {
-      $this[$key] = $value;
-    }
+  public function update($id, $title, $content) {
+    DBConnection::connect();
+    DBConnection::update('UPDATE post SET title = \'' . $title . '\', content = \'' . $content . '\' WHERE id = ' . $id);
+    return $id;
   }
 
   public function get($prop) {
@@ -48,6 +50,13 @@ class Post {
       array_push($posts, new Post($post->id, $post->title, false));
     }
     return $posts;
+  }
+
+  static function checkErrors($array) {
+    $errors = [];
+    if ($array['title'] == '') array_push($errors, 'Le titre ne peut pas être vide !');
+    if ($array['content'] == '') array_push($errors, 'Le contenu ne peut pas être vide !');
+    return $errors;
   }
 }
 ?>

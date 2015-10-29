@@ -1,6 +1,8 @@
 <?php
   if (self::get('uri') == '/user/logout') {
-  	unserialize($_SESSION['user'])->logOut();
+    if (isset($_SESSION['user']) && $_SESSION['user'] != null) {
+  	  unserialize($_SESSION['user'])->logOut();
+    }
   	header('Location: ' . Conf::$BASE_URL . '/');
   } elseif ($_POST != null) {
   	extract($_POST);

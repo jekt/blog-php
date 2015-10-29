@@ -3,7 +3,6 @@ class User {
   private $id, 
           $pseudo, 
           $email,  
-          $isLoggedIn = false,
           $token;
 
   public function __construct($id, $pseudo = null, $fetch = true) {
@@ -33,12 +32,7 @@ class User {
 
   public function logOut() {
     $this->token = null;
-    $this->isLoggedIn = false;
     unset($_SESSION['user']);
-  }
-
-  public function isLoggedIn() {
-    return $this->isLoggedIn;
   }
 
   public function get($prop) {
@@ -57,7 +51,6 @@ class User {
 
   public function setToken() {
     $this->token = serialize($this);
-    $this->isLoggedIn = true;
     $_SESSION['user'] = $this->token;
   }
 }

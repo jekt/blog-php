@@ -6,6 +6,10 @@
   <?php include(Conf::$DIR_PARTIALS . '_header.php'); ?>
   
   <h1><?php echo $post->get('title'); ?></h1>
+  <?php if (isset($_SESSION['user']) && unserialize($_SESSION['user'])->get('id') == $post->get('author')->get('id')) {
+  	echo '<p><a href="' . Conf::$BASE_URL . '/post/' . $post->get('id') . '/update">Modifier cet article</a></p>';
+  	}
+  ?>
   <ul>
 	<?php 
 	  echo '<li>ID : ' . $post->get('id') . '</li>';

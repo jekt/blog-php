@@ -1,5 +1,5 @@
 <?php
-class UserController {
+class UserController extends Controller {
   static function getUserLoginPage() {
   	if (Router::get('uri') == '/user/logout') {
       if (isset($_SESSION['user']) && $_SESSION['user'] != null) {
@@ -13,17 +13,17 @@ class UserController {
   	  }
     }
   
-    include_once(Conf::$DIR_VIEWS . 'userLoginPage.php');
+    echo self::render('userLoginPage');
   }
 
   static function getUserListPage() {
   	$users = User::fetchAll();
-    include_once(Conf::$DIR_VIEWS . 'userListPage.php');
+    echo self::render('userListPage', array('users' => $users));
   }
 
   static function getUserPage() {
-  	$user = new User(Router::$ids[0]);
-    include_once(Conf::$DIR_VIEWS . 'userPage.php');
+  	$user = new User(Router::get('ids')[0]);
+    echo self::render('userPage', array('user' => $user));
   }
 }
 ?>

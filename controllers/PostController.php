@@ -1,18 +1,18 @@
 <?php
-class PostController {
+class PostController extends Controller {
   static function getHomePage() {
   	$posts = Post::fetchAll();
-  	include_once(Conf::$DIR_VIEWS . 'homePage.php');
+  	echo self::render('homePage', array('posts' => $posts));
   }
 
   static function getPostPage() {
-  	$post = new Post(Router::$ids[0]);
-    include_once(Conf::$DIR_VIEWS . 'postPage.php');
+  	$post = new Post(Router::get('ids')[0]);
+    echo self::render('postPage', array('post' => $post));
   }
 
   static function getPostUpdatePage() {
-  	if (isset(Router::$ids[0])) {
-      $post = new Post(Router::$ids[0]);
+  	if (isset(Router::get('ids')[0])) {
+      $post = new Post(Router::get('ids')[0]);
       $id = $post->get('id');
       $title = $post->get('title');
       $content = $post->get('content');
@@ -22,6 +22,11 @@ class PostController {
         http_response_code(403);
         die('<h1>403 Accès interdit !</h1><p>Vous ne pouvez pas modifier cet article, vous n\'en êtes pas l\'auteur.</p>');
       }
+    } else {
+      $id = null;
+      $title = null;
+      $content = null;
+      $author = null;
     }
 
     if (!(isset($_SESSION['user']) && $_SESSION['user'] != null)) {
@@ -34,10 +39,10 @@ class PostController {
       $errors = Post::checkErrors($_POST);
 
   	  if (count($errors) == 0) {
-  	    if (!isset(Router::$ids[0])) {
+  	    if (!isset(Router::get('ids')[0])) {
   	      $success = Post::create($title, $content, $author);
   	    } else {
-          $success = Post::update(Router::$ids[0], $title, $content);
+          $success = Post::update(Router::get('ids')[0], $title, $content);
         }
 
         if ($success) {
@@ -46,9 +51,9 @@ class PostController {
       }
     } 
 
-    $action = Router::$uri;
-    $wording = (Router::$uri == '/post/create') ? 'Créer' : 'Modifier';
-    include_once(Conf::$DIR_VIEWS . 'postUpdatePage.php');
+    $action = Router::get('uri');
+    $wording = (Router::get('uri') == '/post/create') ? 'Créer' : 'Modifier';
+    echo self::render('postUpdatePage', array('action' => $action, 'wording' => $wording, 'id' => $id, 'title' => $title, 'content' => $content, 'author' => $author));
   }
 }
 ?>

@@ -1,9 +1,9 @@
 <?php
 class Router {
-  static $uri,
-  		  $params,
-  		  $ids,
-  		  $routeFound = false;
+  private static $uri,
+  		           $params,
+  		           $ids,
+  		           $routeFound = false;
 
   static function init() {
   	$uri = str_replace(Conf::$BASE_URL, '', 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);

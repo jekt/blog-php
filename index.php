@@ -13,6 +13,7 @@ include_once(Conf::$DIR_MODELS . 'DBConnection.php');
 include_once(Conf::$DIR_MODELS . 'Router.php');
 include_once(Conf::$DIR_MODELS . 'Post.php');
 include_once(Conf::$DIR_MODELS . 'User.php');
+include_once(Conf::$DIR_CONTROLLERS . 'Controller.php');
 include_once(Conf::$DIR_CONTROLLERS . 'PostController.php');
 include_once(Conf::$DIR_CONTROLLERS . 'UserController.php');
 

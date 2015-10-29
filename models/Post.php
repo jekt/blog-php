@@ -26,13 +26,13 @@ class Post {
 
   static function create($title, $content, $author) {
     DBConnection::connect();
-    DBConnection::insert('INSERT INTO post (title, content, author) VALUES (\'' . $title . '\', \'' . $content . '\', ' . $author . ')');
+    DBConnection::insert('INSERT INTO post (title, content, author, pubDate) VALUES (\'' . DBConnection::getCleanVar($title) . '\', \'' . DBConnection::getCleanVar($content) . '\', ' . DBConnection::getCleanVar($author) . ', NOW())');
     return DBConnection::getDB()->insert_id;
   }
 
   static function update($id, $title, $content) {
     DBConnection::connect();
-    DBConnection::update('UPDATE post SET title = \'' . $title . '\', content = \'' . $content . '\' WHERE id = ' . $id);
+    DBConnection::update('UPDATE post SET title = \'' . DBConnection::getCleanVar($title) . '\', content = \'' . DBConnection::getCleanVar($content) . '\' WHERE id = ' . DBConnection::getCleanVar($id));
     return $id;
   }
 

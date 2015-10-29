@@ -1,7 +1,8 @@
 <?php
 
   if (!(isset($_SESSION['user']) && $_SESSION['user'] != null)) {
-    header('Location: ' . Conf::$BASE_URL . '/');
+    http_response_code(403);
+    die('<h1>403 Accès interdit !</h1><p>Vous devez être connecté pour créer un article.</p>');
   }
   
   if ($_POST != null) {

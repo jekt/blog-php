@@ -14,7 +14,6 @@
 	<?php 
 	  echo '<li>ID : ' . $post->get('id') . '</li>';
 	  echo '<li>Title : ' . $post->get('title') . '</li>';
-	  echo '<li>Picture : ' . $post->get('picture') . '</li>';
 	  echo '<li>Content : ' . $post->get('content') . '</li>';
 	  echo '<li>PubDate : ' . $post->get('pubDate') . '</li>';
 	  echo '<li>Author : <a href="' . Conf::$BASE_URL . '/user/' . $post->get('author')->get('id') . '">' . $post->get('author')->get('pseudo') . '</a></li>';

@@ -1,4 +1,4 @@
-<?php $pageTitle = $action . ' article';?>
+<?php $pageTitle = $wording . ' article';?>
 
 <html>
 <?php include(Conf::$DIR_PARTIALS . '_head.php'); ?>
@@ -18,19 +18,15 @@
   	}
   ?>
   
-  <form action="<?php echo Conf::$BASE_URL; ?>/post/create" method="post">
+  <form action="<?php echo Conf::$BASE_URL . $action; ?>" method="post">
   	<label>Titre : 
   		<input type="text" name="title" placeholder="Titre de l'article..." value="<?php echo (isset($title)) ? $title : ''; ?>" />
   	</label><br/>
-  	<label>Image : 
-  		<?php echo (isset($picture)) ? '<br/><img src="' . $picture . '" /><br/>' : ''; ?>
-  		<input type="file" name="picture" /><br/>
-  	</label>
   	<label>Contenu : <br/>
   		<textarea name="content" placeholder="Contenu de l'article..."><?php echo (isset($content)) ? $content : ''; ?></textarea>
   	</label><br/>
     <input type="hidden" name="author" value="<?php echo unserialize($_SESSION['user'])->get('id'); ?>" />
-  	<input type="submit" value="<?php echo $action; ?>" />
+  	<input type="submit" value="<?php echo $wording; ?>" />
   </form>
 
   <?php include(Conf::$DIR_PARTIALS . '_footer.php'); ?>

@@ -5,7 +5,6 @@
     $id = $post->get('id');
     $title = $post->get('title');
     $content = $post->get('content');
-    $picture = $post->get('picture');
     $author = $post->get('author');
 
     if (unserialize($_SESSION['user'])->get('id') != $author->get('id')) {
@@ -37,6 +36,7 @@
     }
   } 
 
-  $action = (self::$uri == '/post/create') ? 'Créer' : 'Modifier';
+  $action = self::$uri;
+  $wording = (self::$uri == '/post/create') ? 'Créer' : 'Modifier';
   include_once(Conf::$DIR_VIEWS . 'postUpdatePage.php');
 ?>

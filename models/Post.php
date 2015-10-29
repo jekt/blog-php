@@ -2,7 +2,6 @@
 class Post {
   private $id, 
           $title, 
-          $picture, 
           $content, 
           $pubDate,
           $author,
@@ -13,11 +12,10 @@ class Post {
 
     if ($fetch) {
       DBConnection::connect();
-      $post = DBConnection::select('SELECT p.id as post_id, p.title, p.picture, p.content, p.pubDate, u.id as user_id, u.pseudo as author FROM post p INNER JOIN user u ON p.author = u.id WHERE p.id=' . DBConnection::getCleanVar($id));
+      $post = DBConnection::select('SELECT p.id as post_id, p.title, p.content, p.pubDate, u.id as user_id, u.pseudo as author FROM post p INNER JOIN user u ON p.author = u.id WHERE p.id=' . DBConnection::getCleanVar($id));
       $post = $post[0];
 
       $this->title = $post->title;
-      $this->picture = $post->picture;
       $this->content = $post->content;
       $this->pubDate = $post->pubDate;
       $this->author = new User($post->user_id, $post->author, false);
@@ -32,7 +30,7 @@ class Post {
     return DBConnection::getDB()->insert_id;
   }
 
-  public function update($id, $title, $content) {
+  static function update($id, $title, $content) {
     DBConnection::connect();
     DBConnection::update('UPDATE post SET title = \'' . $title . '\', content = \'' . $content . '\' WHERE id = ' . $id);
     return $id;

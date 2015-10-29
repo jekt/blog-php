@@ -10,7 +10,14 @@
            $DIR_VIEWS 		  = 'views/',
            $DIR_PARTIALS	  = 'views/partials/',
            $DEBUG_MODE      = true,
-           $BASE_URL        = 'http://localhost:8888/Cours/PHP/blog';
-           //$BASE_URL        = 'http://localhost:8888/blog-php';
+           $BASE_URL        = '';
+
+    static function init() {
+      self::baseUrl();
+    }
+
+    private static function baseUrl() {
+      self::$BASE_URL = implode('/', explode('/', 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'], -1));
+    }
   }
 ?>

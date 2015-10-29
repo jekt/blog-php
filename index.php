@@ -1,7 +1,8 @@
 <?php
 session_start();
-
+ini_set('display_errors', '1');
 include_once('conf.php');
+Conf::init();
 
 if (Conf::$DEBUG_MODE) {
   error_reporting(E_ALL);

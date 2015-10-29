@@ -10,11 +10,11 @@
 	  if (count($posts) == 0) {
 		echo '<p>Aucun article à afficher.</p>';
 	  } else {
+	  	echo '<ul>';
 	  	foreach($posts as $post) {
-	  	  echo '<ul>';
 		  echo '<li><a href="' . Conf::$BASE_URL . '/post/' . $post->get('id') .'">' . $post->get('title') . '</a></li>';
-		  echo '</ul>';
 		}
+		echo '</ul>';
 	  }
 	?>
   <?php include(Conf::$DIR_PARTIALS . '_footer.php'); ?>

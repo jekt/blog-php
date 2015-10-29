@@ -12,7 +12,7 @@ class Router {
     self::$uri = strtok($uri, '?');
   }
 
-  static function r($route, $controller) {
+  static function r($route, $controller, $method) {
     self::init();
     if (!self::$routeFound) {
     	$route = preg_replace('#\(\:[a-z]+\)#i', '([a-z0-9-_]+)', $route);
@@ -22,16 +22,16 @@ class Router {
     	  	self::$ids = array_slice($ids, 1);
     	  }
     	  self::$routeFound = true;
-    	  include_once(Conf::$DIR_CONTROLLERS . $controller);
+    	  $controller::$method();
     	}
     }
   }
 
-  static function error($fallbackController) {
+  static function error($fallbackController, $method) {
   	if (!self::$routeFound) {
   	  http_response_code(404);
       self::$routeFound = true;
-  	  include_once(Conf::$DIR_CONTROLLERS . $fallbackController);
+  	  $fallbackController::$method();
   	}
   }
 

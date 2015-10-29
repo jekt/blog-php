@@ -13,14 +13,16 @@ include_once(Conf::$DIR_MODELS . 'DBConnection.php');
 include_once(Conf::$DIR_MODELS . 'Router.php');
 include_once(Conf::$DIR_MODELS . 'Post.php');
 include_once(Conf::$DIR_MODELS . 'User.php');
+include_once(Conf::$DIR_CONTROLLERS . 'PostController.php');
+include_once(Conf::$DIR_CONTROLLERS . 'UserController.php');
 
-Router::r('/post/create', 'postUpdateController.php');
-Router::r('/post/(:id)', 'postPageController.php');
-Router::r('/post/(:id)/update', 'postUpdateController.php');
-Router::r('/users', 'userListController.php');
-Router::r('/user/login', 'userConnectController.php');
-Router::r('/user/logout', 'userConnectController.php');
-Router::r('/user/(:id)', 'userPageController.php');
-Router::r('/', 'homePageController.php');
-Router::error('homePageController.php');
+Router::r('/post/create', 'PostController', 'getPostUpdatePage');
+Router::r('/post/(:id)', 'PostController', 'getPostPage');
+Router::r('/post/(:id)/update', 'PostController', 'getPostUpdatePage');
+Router::r('/users', 'UserController', 'getUserListPage');
+Router::r('/user/login', 'UserController', 'getUserLoginPage');
+Router::r('/user/logout', 'UserController', 'getUserLoginPage');
+Router::r('/user/(:id)', 'UserController', 'getUserPage');
+Router::r('/', 'PostController', 'getHomePage');
+Router::error('PostController', 'getHomePage');
 ?>

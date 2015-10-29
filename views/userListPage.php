@@ -10,11 +10,11 @@
 	  if (count($users) == 0) {
 		echo '<p>Aucun auteur pour l\'instant.</p>';
 	  } else {
+	  	echo '<ul>';
 	  	foreach($users as $user) {
-	  	  echo '<ul>';
 		  echo '<li><a href="' . Conf::$BASE_URL . '/user/' . $user->get('id') .'">' . $user->get('pseudo') . '</a></li>';
-		  echo '</ul>';
 		}
+		echo '</ul>';
 	  }
 	?>
   <?php include(Conf::$DIR_PARTIALS . '_footer.php'); ?>
